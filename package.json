@@ -1,7 +1,7 @@
 {
   "name": "discord-anti-spam-bot",
   "version": "1.0.0",
-  "description": "A Discord bot that removes spam and scam-style giveaway messages.",
+  "description": "A Discord bot that removes spam and scam messages as well as tracking community career readiness.",
   "main": "src/index.js",
   "type": "commonjs",
   "scripts": {
