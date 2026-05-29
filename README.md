@@ -51,8 +51,8 @@ Submission totals are persisted locally using JSON storage.
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
-cd discord-anti-spam-bot
+git clone https://github.com/devanshxgarg/aacuw-discord-bot.git
+cd aacuw-discord-bot
 ```
 
 ### 2. Install Dependencies
