@@ -1,29 +1,83 @@
-# Discord Anti-Spam Bot
+# AACUW Discord Bot
 
-This bot removes suspicious spam messages, including giveaway-scam style posts such as:
+A Discord moderation bot built to automatically detect spam, reduce scam-style messages, and support community engagement workflows inside Discord servers.
 
-`I'm moving out and giving away my MacBook`
+The bot was developed for the University of Washington Applied Analytics Club (AACUW) Discord server and includes automated moderation tools alongside private DM-based submission tracking systems.
 
-It currently blocks:
+## Features
 
-- giveaway or "moving out" scam wording
-- duplicate repeated messages
-- burst spam from sending too many messages in a short time
+### Moderation & Spam Detection
+
+* Detects and removes suspicious giveaway or “moving out” scam messages
+* Prevents duplicate repeated-message spam
+* Detects burst spam from rapid message sending
+* Automatically removes flagged messages using Discord moderation permissions
+* Optional moderation logging to a designated Discord channel
+
+### Community Submission Tracking
+
+The bot also supports private DM slash commands for tracking professional development activities:
+
+* Resume submissions
+* LinkedIn profile submissions
+* Coffee chat confirmations
+
+Submission totals are persisted locally using JSON storage.
+
+## Slash Commands
+
+### DM Commands
+
+* `/submitresume` — Upload a resume file privately to the bot
+* `/submitlinkedin` — Submit a LinkedIn profile URL
+* `/submitcoffeechat` — Upload a screenshot of a scheduled coffee chat
+
+### Public Commands
+
+* `!pingbot`
+* `!resumecount`
+* `!linkedincount`
+* `!coffeechatcount`
+
+## Stack
+
+* Node.js
+* Discord.js
+* JavaScript
+* Render (deployment)
 
 ## Setup
 
-1. Create a Discord bot in the Discord Developer Portal.
-2. Enable the `Message Content Intent` for the bot.
-3. Copy `.env.example` to `.env`.
-4. Put your bot token in `DISCORD_BOT_TOKEN`.
-5. Optionally add a text channel ID to `LOG_CHANNEL_ID` for moderation logs.
-6. Install dependencies:
+### 1. Clone the Repository
+
+```bash
+git clone <your-repo-url>
+cd discord-anti-spam-bot
+```
+
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-7. Start the bot:
+### 3. Configure Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+DISCORD_BOT_TOKEN=your_discord_bot_token
+LOG_CHANNEL_ID=optional_log_channel_id
+```
+
+### 4. Enable Discord Intents
+
+In the Discord Developer Portal:
+
+* Enable **Message Content Intent**
+* Ensure the bot has proper moderation permissions
+
+### 5. Start the Bot
 
 ```bash
 npm start
@@ -31,35 +85,28 @@ npm start
 
 ## Required Bot Permissions
 
-Invite the bot with these permissions:
+The bot requires the following permissions:
 
-- Read Messages / View Channels
-- Send Messages
-- Manage Messages
-- Read Message History
+* View Channels
+* Read Message History
+* Send Messages
+* Manage Messages
 
-## How It Works
+## Deployment
 
-The bot listens for new messages and removes them when:
+This project includes a `render.yaml` configuration file for deployment on Render as a background worker.
 
-- the message contains multiple suspicious scam phrases
-- the same user posts the same content repeatedly
-- the same user sends too many messages inside a short burst window
+### Deploy on Render
 
-## Notes
+1. Push the repository to GitHub
+2. Create a new Blueprint deployment in Render
+3. Connect the GitHub repository
+4. Add the required environment variables:
 
-- The giveaway-scam detector is intentionally simple and easy to tune.
-- You can adjust thresholds and phrase patterns in `src/index.js`.
+   * `DISCORD_BOT_TOKEN`
+   * `LOG_CHANNEL_ID` (optional)
+5. Deploy the service
 
-## Run It 24/7 On Render
+The bot will remain online continuously through Render hosting.
 
-If you want the bot to stay online even when your Mac is off, deploy it as a Render worker.
 
-1. Push this project to a GitHub repo.
-2. In Render, create a new Blueprint from that repo.
-3. Render will detect the included `render.yaml` file.
-4. When prompted for environment variables, set `DISCORD_BOT_TOKEN` to your real Discord bot token.
-5. Leave `LOG_CHANNEL_ID` empty if you do not want logging.
-6. Deploy the service.
-
-This project is configured as a background worker, not a website, so Render should keep the bot process running continuously after deploy.
